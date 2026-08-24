@@ -1,7 +1,7 @@
 {
-  "name": "gfa-ai-analyst-backend",
-  "version": "5.1.0",
+  "name": "gfa-jarvis-backend",
+  "version": "6.0.0",
   "private": true,
-  "description": "GFA AI Analyst 대시보드용 Vercel 서버리스 백엔드 — GPT/Gemini/Groq 비교 + 미국 전역 주거인구(Census ACS) 프록시.",
+  "description": "GFA 자비스(GPT 단일) 대시보드용 Vercel 서버리스 백엔드 — AI 질의응답 + 미국 전역 주거인구(Census ACS) 프록시 + 구글시트 대화기록.",
   "engines": { "node": ">=18" }
 }

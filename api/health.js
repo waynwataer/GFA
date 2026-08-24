@@ -6,5 +6,5 @@ function cors(req,res){
 }
 module.exports=async function handler(req,res){
   cors(req,res);if(req.method==='OPTIONS')return res.status(204).end();if(req.method!=='GET')return res.status(405).json({error:'GET only'});
-  return res.json({ok:true,openai:!!process.env.OPENAI_API_KEY,gemini:!!process.env.GEMINI_API_KEY,groq:!!process.env.GROQ_API_KEY,chat_log:!!process.env.GFA_CHAT_LOG_WEBHOOK,language:'ko-KR'});
+  return res.json({ok:true,jarvis:!!process.env.OPENAI_API_KEY,chat_log:!!process.env.GFA_CHAT_LOG_WEBHOOK,language:'ko-KR'});
 };
