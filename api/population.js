@@ -7,6 +7,7 @@ function fullGeoId(f){const p=f?.properties||{};return String(p.full_geoid||p.ge
 function geometryCenter(geom){if(!geom?.coordinates)return null;let sx=0,sy=0,n=0;(function walk(a){if(!Array.isArray(a))return;if(a.length>=2&&typeof a[0]==='number'&&typeof a[1]==='number'){sx+=a[0];sy+=a[1];n++;return;}a.forEach(walk);})(geom.coordinates);return n?{lng:sx/n,lat:sy/n}:null;}
 function distanceKm(a,b){const R=6371,toRad=x=>x*Math.PI/180;const dLat=toRad(b.lat-a.lat),dLng=toRad(b.lng-a.lng);const s=Math.sin(dLat/2)**2+Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(s));}
 const RADIUS_KM=45; // 대형 카운티(예: LA County)에서 과도한 payload를 막기 위한 반경 제한
+const STATE_FIPS_ABBR={'01':'AL','02':'AK','04':'AZ','05':'AR','06':'CA','08':'CO','09':'CT','10':'DE','11':'DC','12':'FL','13':'GA','15':'HI','16':'ID','17':'IL','18':'IN','19':'IA','20':'KS','21':'KY','22':'LA','23':'ME','24':'MD','25':'MA','26':'MI','27':'MN','28':'MS','29':'MO','30':'MT','31':'NE','32':'NV','33':'NH','34':'NJ','35':'NM','36':'NY','37':'NC','38':'ND','39':'OH','40':'OK','41':'OR','42':'PA','44':'RI','45':'SC','46':'SD','47':'TN','48':'TX','49':'UT','50':'VT','51':'VA','53':'WA','54':'WV','55':'WI','56':'WY','60':'AS','66':'GU','69':'MP','72':'PR','78':'VI'};
 
 /* Census Geocoder — 브라우저 CORS는 막혀 있지만(공식 문서 명시) 서버-서버 호출은 문제 없다. */
 async function countyViaCensusGeocoder(lat,lng){
@@ -52,7 +53,8 @@ module.exports=async function handler(req,res){
       features.push(f);
     }
     if(!features.length)throw new Error('해당 County의 Block Group 인구를 매칭하지 못했습니다.');
+    const sumPopulation=features.reduce((s,f)=>s+(f.properties.population||0),0);
     res.setHeader('Cache-Control','s-maxage=86400, stale-while-revalidate=604800');
-    return res.status(200).json({type:'FeatureCollection',features,_source:'U.S. Census ACS via Census Reporter',_release:data.release?.name||'latest ACS 5-year',_county_geoid:county.geoid,_county_name:county.name,_center:{lat,lng},_radius_km:RADIUS_KM,_total_in_county:totalInCounty});
+    return res.status(200).json({type:'FeatureCollection',features,_source:'U.S. Census ACS via Census Reporter',_release:data.release?.name||'latest ACS 5-year',_county_geoid:county.geoid,_county_name:county.name,_state_abbr:STATE_FIPS_ABBR[county.state]||'',_center:{lat,lng},_radius_km:RADIUS_KM,_total_in_county:totalInCounty,_sum_population:sumPopulation});
   }catch(e){return res.status(502).json({error:e.message||'Population proxy failed'});}
 };
