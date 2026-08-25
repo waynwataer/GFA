@@ -1,7 +1,7 @@
 {
   "name": "gfa-jarvis-backend",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "private": true,
-  "description": "GFA 자비스(GPT 단일) 대시보드용 Vercel 서버리스 백엔드 — AI 질의응답 + 미국 전역 주거인구(Census ACS) 프록시 + 구글시트 대화기록.",
+  "description": "GFA 자비스(GPT 단일) 대시보드용 Vercel 서버리스 백엔드.",
   "engines": { "node": ">=18" }
 }
