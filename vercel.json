@@ -1,6 +1,7 @@
 {
   "functions": {
     "api/ai-compare.js": {"maxDuration": 60},
-    "api/population.js": {"maxDuration": 30}
+    "api/population.js": {"maxDuration": 30},
+    "api/area-profile.js": {"maxDuration": 45}
   }
 }

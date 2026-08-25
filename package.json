@@ -1,7 +1,7 @@
 {
   "name": "gfa-jarvis-backend",
-  "version": "6.2.0",
+  "version": "7.0.0",
   "private": true,
-  "description": "GFA 자비스 대시보드용 Vercel 서버리스 백엔드 — 전국 주거인구 프록시(주 약어·합계 포함) + AI + 구글시트 기록.",
+  "description": "GFA 자비스 대시보드용 Vercel 서버리스 백엔드 — 전국 주거인구 프록시 + 도시 종합 프로파일(인구·학교·범죄) + AI + 구글시트 기록.",
   "engines": { "node": ">=18" }
 }
